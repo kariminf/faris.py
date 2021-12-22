@@ -1,0 +1,4 @@
+
+
+class Being:
+	pass
