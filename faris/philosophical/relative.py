@@ -1,16 +1,38 @@
+# FARIS : Factual Arrangement and Representation of Ideas in Sentences
+# FAris : Farabi & Aristotle
+# Faris : A knight (in Arabic)
+# --------------------------------------------------------------------
+# Copyright (C) 2015, 2021 Abdelkrime Aries (kariminfo0@gmail.com)
+# 
+# Autors: 
+#        - 2021 Abdelkrime Aries (kariminfo0@gmail.com)
+# 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+# 
+# http://www.apache.org/licenses/LICENSE-2.0
+#  
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 from being import Being
-from enum import Enum
+from enum import Enum, auto
 from typing import Union
 from action import Action
 from substance import Substance
+from processor import Processor
 
 class RelativeType(Enum):
-	OF = 0
-	MORE = 1
-	LESS = 2
-	MOST = 3
-	LEAST = 4
-	EQUAL = 5
+	OF = auto()
+	MORE = auto()
+	LESS = auto()
+	MOST = auto()
+	LEAST = auto()
+	EQUAL = auto()
 
 
 class Relative(Being):
@@ -22,4 +44,7 @@ class Relative(Being):
 		self.owner = owner 
 		self.reltype = reltype
 		self.relative = relative
+	
+	def process(self, processor: Processor):
+		processor.process_relative(self)
 	
