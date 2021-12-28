@@ -19,8 +19,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pos import POS
-from pos import Gender, Definiteness
+from .pos import POS
+from .pos import Gender, Definiteness
 
 class Noun(POS):
 
@@ -36,7 +36,7 @@ class Noun(POS):
 		return result
 	
 	def __repr__(self) -> str:
-		return 'n-' + super().__repr__()
+		return 'NOUN(' + super().__repr__() + ')'
 
 	def set_defined(self):
 		self.defined = True

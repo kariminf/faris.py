@@ -19,10 +19,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from being import Being
-from linguistic.adverbs import Adverb
+from __future__ import annotations
+
 from enum import Enum, auto
-from processor import Processor
+from collections.abc import Set 
+from typing import List, Tuple
+
+from typing import TYPE_CHECKING
+
+from faris.philosophical.substance import Substance
+if TYPE_CHECKING:
+	from ..processor import Processor
+	from ..linguistic.adverbs import Adverb
+
+from .being import Being
 
 class RelationTime(Enum):
 	EXIST = auto() # in, at time 
@@ -38,27 +48,21 @@ class RelationTime(Enum):
 	THROUGH = auto() # time
 
 class Time(Being):
-	def __init__(self) -> None:
+	id = 0
+	def __init__(self, relation: RelationTime = RelationTime.EXIST) -> None:
 		super().__init__()
-		self.type = None
+		self.id = Time.id 
+		Time.id += 1
+		self.relation = relation
+		# TODO: just and relation
+		self.relatives: List[Tuple[Adverb, Substance]] = []
 	
-	def define_adverb(self, adverb: Adverb) -> bool:
-		if not self.type:
-			self.adverb = adverb
-			self.type = 'adverb'
-			return True 
-		else:
-			return False
+	def __repr__(self) -> str:
+		return 'TIME(' + repr(self.relation) + ')'
 	
-	def define_relation(self, relation: RelationTime, places: Set[Set['Time']]):
-		if not self.type:
-			self.relation = relation
-			self.places = places 
-			self.type = 'relation'
-			return True 
-		else:
-			return False
+	def add_relative(self, relative: Tuple[Adverb, Substance]):
+		self.relatives.append(relative)
 	
-	def process(self, processor: Processor):
-		processor.process_time(self)
+	def process(self, p: Processor):
+		p.process_time(self)
 

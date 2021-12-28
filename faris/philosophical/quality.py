@@ -19,21 +19,36 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from being import Being
-from linguistic.adjectives import Adjective
-from linguistic.adverbs import Adverb
+from __future__ import annotations
+
 from typing import List
-from processor import Processor
+
+from .being import Being
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from ..processor import Processor
+	from ..linguistic.adjectives import Adjective
+	from ..linguistic.adverbs import Adverb
+
 
 class Quality(Being):
+
+	id = 0
+
 	def __init__(self, adjective: Adjective) -> None:
 		super().__init__()
+		self.id = Quality.id 
+		Quality.id += 1
 		self.adjective = adjective
 		self.adverbs = set()
+	
+	def __repr__(self) -> str:
+		return repr(self.adjective)
 	
 	def add_adverbs(self, adverbs: List[Adverb]):
 		for adverb in adverbs:
 			self.adverbs.add(adverb)
 
-	def process(self, processor: Processor):
-		processor.process_quality(self)
+	def process(self, p: Processor):
+		p.process_quality(self)

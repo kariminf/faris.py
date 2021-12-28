@@ -19,8 +19,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from adjectives import *
-from adverbs import *
-from nouns import *
-from pos import *
-from verbs import *
+from .adjectives import *
+from .adverbs import *
+from .nouns import *
+from .pos import *
+from .verbs import *

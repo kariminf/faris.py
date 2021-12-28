@@ -19,21 +19,45 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from being import Being 
-from processor import Processor
+# from __future__ import annotations
+# from typing import TYPE_CHECKING
+# if TYPE_CHECKING:
+# 	from .being import Being
+
+from __future__ import annotations
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from ..processor import Processor
+
+from .being import Being
 
 class Quantity(Being):
 
+	id = 0
+
 	def __init__(self) -> None:
 		super().__init__()
+		self.id = Quantity.id 
+		Quantity.id += 1
 		self.cardinal = True
 		self.plural = False
 		self.unit = None
 		self.nbr = 1
 	
+	def __repr__(self) -> str:
+		result = 'Quantity(nbr:'
+		if self.plural:
+			result += 'plural'
+		else:
+			result += str(self.nbr)
+		if self.unit:
+			result += ', unit:' + repr(self.unit.noun)
+		result += ')'
+		return result
+	
 	def set_ordinal(self):
-		if not self.plural:
-			self.cardinal = False
+		self.cardinal = False
 	
 	def set_plural(self):
 		self.plural = True
@@ -43,6 +67,7 @@ class Quantity(Being):
 
 	def set_number(self, nbr):
 		self.nbr = nbr
-	
-	def process(self, processor: Processor):
-		processor.process_quantity(self)
+
+	def process(self, p: Processor):
+		p.process_quantity(self)
+

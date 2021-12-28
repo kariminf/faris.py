@@ -19,12 +19,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from being import Being
+from __future__ import annotations
+
 from enum import Enum, auto
 from typing import Union
-from action import Action
-from substance import Substance
-from processor import Processor
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from .action import Action
+	from .substance import Substance
+	from ..processor import Processor
+
+from .being import Being
 
 class RelativeType(Enum):
 	OF = auto()
@@ -44,7 +50,9 @@ class Relative(Being):
 		self.owner = owner 
 		self.reltype = reltype
 		self.relative = relative
-	
-	def process(self, processor: Processor):
-		processor.process_relative(self)
-	
+
+	def __repr__(self) -> str:
+		return repr(self.reltype)
+
+	def process(self, p: Processor):
+		p.process_relative(self)

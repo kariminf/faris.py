@@ -21,4 +21,5 @@
 
 
 class Being:
-	pass
+	def __hash__(self) -> int:
+		return hash(self.__repr__)

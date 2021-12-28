@@ -19,9 +19,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from processor import Processor
+from __future__ import annotations
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from ..processor import Processor
 
 class Idea:
-	def process(self, processor: Processor):
-		processor.process_idea(self)
+	def process(self, p: Processor):
+		p.process_idea(self)
 

@@ -19,11 +19,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from being import Being
-from linguistic.adverbs import Adverb
-from typing import Set
+from __future__ import annotations
+
 from enum import Enum, auto
-from processor import Processor
+from .being import Being
+
+from typing import Set, List, Tuple
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from ..processor import Processor
+	from ..linguistic.adverbs import Adverb
+	from .substance import Substance
+
 
 class RelationPlace(Enum):
 	EXIST = auto() # in, at  a place
@@ -45,27 +53,20 @@ class RelationPlace(Enum):
 
 
 class Place(Being):
-	def __init__(self) -> None:
+	id = 0
+	def __init__(self, relation: RelationPlace = RelationPlace.EXIST) -> None:
 		super().__init__()
-		self.type = None
+		self.id = Place.id 
+		Place.id += 1
+		self.relation = relation
+		# TODO: just and relation
+		self.relatives: List[Tuple[Adverb, Substance]] = []
 	
-	def define_adverb(self, adverb: Adverb) -> bool:
-		if not self.type:
-			self.adverb = adverb
-			self.type = 'adverb'
-			return True 
-		else:
-			return False
+	def __repr__(self) -> str:
+		return 'PLACE(' + repr(self.relation) + ')'
 	
-	def define_relation(self, relation: RelationPlace, places: Set[Set['Place']]):
-		if not self.type:
-			self.relation = relation
-			self.places = places 
-			self.type = 'relation'
-			return True 
-		else:
-			return False
+	def add_relative(self, relative: Tuple[Adverb, Substance]):
+		self.relatives.append(relative)
 	
-	def process(self, processor: Processor):
-		processor.process_place(self)
-	
+	def process(self, p: Processor):
+		p.process_place(self)

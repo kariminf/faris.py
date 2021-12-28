@@ -19,29 +19,63 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from being import Being
-from linguistic.nouns import Noun
-from quality import Quality
-from relative import Relative, RelativeType
+from __future__ import annotations
+
 from typing import Set
-from processor import Processor
+from collections.abc import Mapping
+
+from typing import TYPE_CHECKING
+
+from faris.philosophical.state import State
+
+if TYPE_CHECKING:
+	from .quality import Quality
+	from .relative import Relative, RelativeType
+	from .quantity import Quantity
+	from ..processor import Processor
+	from ..linguistic.nouns import Noun
+
+from .being import Being
 
 class Substance(Being):
+	id = 0
 	def __init__(self, noun: Noun) -> None:
 		super().__init__()
+		self.id = Substance.id 
+		Substance.id += 1
 		self.noun = noun
+		self.quantity = None
 		self.qualities = set()
 		# An action can have relatives: He works harder than his brother
 		self.relatives: Set[Relative] = set()
+		self.states: Set[State] = set()
+
+	def __repr__(self) -> str:
+		return 'SUBST(' + repr(self.noun) + ')'
+
+	def __hash__(self) -> int:
+		return hash(self.__repr__)
+	
+	def __eq__(self, other: 'Substance') -> bool:
+		result = super().__eq__(other)
+		result = result and (self.noun == other.noun)
+		return result
 
 	def add_quality(self, quality: Quality):
 		self.qualities.add(quality)
+	
+	def set_quantity(self, quantity: Quantity):
+		self.quantity = quantity
 	
 	def assign_relative(self, reltype: RelativeType, relative) -> Relative:
 		relative = Relative(self, reltype, relative)
 		self.relatives.add(relative)
 		return relative
+	
+	def update(self, substance: 'Substance'):
+		self.qualities.difference_update(substance.qualities)
+		self.relatives.difference_update(substance.relatives)
 
-	def process(self, processor: Processor):
-		processor.process_substance(self)
+	def process(self, p: Processor):
+		p.process_substance(self)
 

@@ -19,16 +19,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
+
 from enum import Enum, auto
-from philosophical.action import Action
-from philosophical.substance import Substance
 from collections.abc import Mapping
 from typing import Set
-from thought import Thought
-from opinion import Opinion
-from conditional import Conditional
-from idea import Idea
-from processor import Processor
+from .thought import Thought
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from .opinion import Opinion
+	from .conditional import Conditional
+	from .idea import Idea
+	from ..processor import Processor
+	from ..philosophical.action import Action
+	from ..philosophical.substance import Substance
 
 
 class MentalState(Enum):
@@ -71,5 +75,5 @@ class Mind:
 		
 		self.conditions.get(mental_state).add(Conditional(condition, predicate))
 
-	def process(self, processor: Processor):
-		processor.process_mind(self)
+	def process(self, p: Processor):
+		p.process_mind(self)

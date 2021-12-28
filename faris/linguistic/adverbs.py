@@ -19,8 +19,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pos import POS
+from .pos import POS
 
 class Adverb (POS):
 	def __init__(self, synSet: int) -> None:
 		super().__init__(synSet)
+
+	def __repr__(self) -> str:
+		return 'ADV(' + super().__repr__() + ')'

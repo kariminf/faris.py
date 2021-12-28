@@ -19,13 +19,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from being import Being 
-from linguistic.verbs import Verb, verb 
+from __future__ import annotations
+
 from collections.abc import Mapping
-from action import Action
-from substance import Substance
 from typing import Set
-from processor import Processor
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	from .action import Action
+	from .substance import Substance
+	from ..processor import Processor
+	from ..linguistic.verbs import Verb
+
+from .being import Being
 
 class Attitude(Being):
 
@@ -33,6 +39,9 @@ class Attitude(Being):
 		super().__init__()
 		self.posture = ing_verb
 		self.owners: Mapping[Substance, Set[Action]] = {}
+	
+	def __repr__(self) -> str:
+		return repr(self.posture)
 
 	def add_owner(self, player: Substance, in_action: Action):
 		if player in self.owners:
@@ -40,5 +49,6 @@ class Attitude(Being):
 		else:
 			self.owners[player] = set([in_action])
 	
-	def process(self, processor: Processor):
-		processor.process_attitude(self)
+	def process(self, p: Processor):
+		p.process_attitude(self)
+	

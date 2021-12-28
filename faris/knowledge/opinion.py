@@ -19,8 +19,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from idea import Idea
-from mind import Mind
+from __future__ import annotations
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+	# from .idea import Idea
+	from .mind import Mind
+
+from .idea import Idea
 
 class Opinion(Idea):
 	def __init__(self, super_mind: Mind, other_mind: Mind) -> None:

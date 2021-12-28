@@ -19,8 +19,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from conditional import *
-from idea import *
-from mind import *
-from opinion import *
-from thought import *
+from .conditional import *
+from .idea import *
+from .mind import *
+from .opinion import *
+from .thought import *

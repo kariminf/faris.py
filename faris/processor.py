@@ -19,11 +19,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
-from faris import Faris
-from knowledge import Mind, Idea
-from philosophical import Action, Attitude, Place, Quality
-from philosophical import Quantity, Relative, State, Substance, Time
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .faris import Faris
+    from .knowledge import Mind, Idea
+    from .philosophical import Action, Attitude, Place, Quality
+    from .philosophical import Quantity, Relative, State, Substance, Time
 
 
 class Processor(ABC):

@@ -19,13 +19,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from action import *
-from attitude import *
-from being import *
-from place import *
-from quality import *
-from quantity import *
-from relative import *
-from state import *
-from substance import *
-from time import *
+from .action import *
+from .attitude import *
+from .being import *
+from .place import *
+from .quality import *
+from .quantity import *
+from .relative import *
+from .state import *
+from .substance import *
+from .time import *

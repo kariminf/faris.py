@@ -19,8 +19,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from pos import POS
-from pos import Tense, Aspect
+from .pos import POS
+from .pos import Tense, Aspect
 
 class Verb(POS):
 	def __init__(self, synSet: int) -> None:
@@ -32,6 +32,12 @@ class Verb(POS):
 		result = super().__eq__(other)
 		result = result and (self.tense == other.tense)
 		result = result and (self.aspect == other.aspect)
+		return result
+	
+	def __repr__(self) -> str:
+		result = 'VRB(' + super().__repr__() + ',' 
+		result += str(self.tense) + ', '
+		result += str(self.aspect) + ')'
 		return result
 
 	def set_tense(self, tense: Tense):
